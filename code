@@ -1,0 +1,36 @@
+let img;
+
+function preload() {
+  img = loadImage('https://raw.githubusercontent.com/choheonrae/D_Quiztest/main/test.png');
+}
+
+function setup() {
+  createCanvas(img.width * 2, img.height * 2);
+  translate(width / 2, height / 2);
+  
+  // 회전시키기 
+  rotate(100.36); //
+  
+  imageMode(CENTER);
+  image(img, 0, 0, img.width * 2, img.height * 2);
+  loadPixels();
+
+  let thresholdValue = 173;
+  for (let i = 0; i < pixels.length; i += 4) {
+    let r = pixels[i];
+    let g = pixels[i + 1];
+    let b = pixels[i + 2];
+    let gray = (r + g + b) / 3;
+
+    if (gray > thresholdValue) {
+      pixels[i] = 255;
+      pixels[i + 1] = 255;
+      pixels[i + 2] = 255;
+    } else {
+      pixels[i] = 0;
+      pixels[i + 1] = 0;
+      pixels[i + 2] = 0;
+    }
+  }
+  updatePixels();
+}
